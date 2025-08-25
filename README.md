@@ -37,6 +37,16 @@
 
 ---
 
+## 🖥️ 시스템 구성도
+아래 그림은 **AI 수학 튜터 시스템 전체 Architecture**입니다.  
+Raspberry Pi를 중심으로 입력(USB Cam, MIC, Keyboard) → Mathpix API/OCR → SymPy 계산 → Gemma LLM 풀이 생성 → gTTS/Whisper 음성 입출력 → 출력(Display, Speaker) 으로 이어지는 흐름을 시각화했습니다.
+
+<p align="center">
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/AI%20Architecture.png" alt="AI System Architecture" width="800"/>
+</p>
+
+---
+
 ## 🧰 사용 기술
 | 영역 | 기술 |
 |------|------|
@@ -47,6 +57,66 @@
 | 자연어 생성 | Gemma 3:12B via Ollama |
 | 음성 처리 | Whisper (STT), gTTS (TTS), SRE (수식 발음 규칙) |
 | 환경 | Raspberry Pi, Windows, Linux 가능 |
+
+---
+
+## 🔑 핵심 기능 및 기술 구현
+
+아래 다이어그램은 `client.py` 와 `server.py` 기반의 **AI 수학 튜터 핵심 파이프라인**을 보여줍니다.  
+- **client.py** : 카메라 캡처, 음성 입력(STT), OCR(Mathpix), 수식 처리(SymPy), 프롬프트 생성 및 서버 요청 수행  
+- **server.py** : Ollama 기반 Gemma 모델과 연동하여 풀이 결과를 생성 및 반환  
+
+<p align="center">
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/Client.py.png" alt="핵심 기능 흐름" width="850"/>
+</p>
+
+---
+
+### 1️⃣ 수식 이미지 OCR 인식
+카메라로 입력된 수식을 Mathpix API로 인식하여 LaTeX으로 변환  
+
+<p align="center">
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/OCR.png" alt="OCR Recognition" width="800"/>
+</p>
+
+---
+
+### 2️⃣ 수식 파싱 및 SymPy 연산
+LaTeX 수식을 SymPy로 전달하여 **미분, 적분, 방정식 풀이, 푸리에 변환** 등을 수행  
+
+<p align="center">
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/SymPy.png" alt="SymPy Calculation" width="800"/>
+</p>
+
+---
+
+### 3️⃣ Gemma LLM 프롬프트 + 풀이 생성
+SymPy 결과를 기반으로 **자연어 풀이 설명** 생성  
+
+<p align="center">
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/Prompt.png" alt="Gemma Prompt" width="800"/>
+</p>
+
+---
+
+### 4️⃣ 음성 출력 (gTTS + SRE)
+생성된 풀이를 gTTS와 SRE를 통해 **음성으로 변환**하고 재생  
+
+<p align="center">
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/TTS.png" alt="gTTS + SRE" width="800"/>
+</p>
+
+---
+
+## 🚀 실행 흐름
+1️⃣ **사용자 입력**  
+   - 이미지 입력 (카메라 촬영)  
+   - 음성 명령 입력 (STT)  
+
+2️⃣ 📸 **Mathpix** → 수식 LaTeX 추출  
+3️⃣ 🧮 **SymPy** → 계산 수행  
+4️⃣ 🤖 **Gemma** → 풀이 설명 생성  
+5️⃣ 🔈 **gTTS + SRE** → 음성 설명 출력  
 
 ---
 
@@ -65,44 +135,10 @@
 
 ---
 
-## 🚀 실행 흐름
-1️⃣ **사용자 입력**  
-   - 이미지 입력 (카메라 촬영)  
-   - 음성 명령 입력 (STT)  
-
-2️⃣ 📸 **Mathpix** → 수식 LaTeX 추출  
-3️⃣ 🧮 **SymPy** → 계산 수행  
-4️⃣ 🤖 **Gemma** → 풀이 설명 생성  
-5️⃣ 🔈 **gTTS + SRE** → 음성 설명 출력  
-
----
-
 ## 🎓 학습 목표 및 성과
 - 수식 OCR + 계산 + 설명 + 음성 출력까지 통합한 전체 AI 파이프라인 구현  
 - 실제 AI 기반 튜터링 시스템의 구성 방식을 실습  
 - Raspberry Pi 기반 AI 응용 시스템 구축 경험  
-
----
-
-## 📂 파일 구조
-```plaintext
-project_root/
-├── main.py
-├── server.py
-├── sre.js
-├── capture.jpg
-├── recorded.wav
-├── transcript.txt
-├── gemma3_answer.txt
-├── output_sre_gtts.mp3
-└── output_sre_gtts.txt
-```
----
-
-## 🔚 마무리 및 확장 가능성
-이 프로젝트는 **AI와 음성 기술을 융합**하여 사용자 친화적인 수학 학습 환경을 제공하는 데 중점을 두었습니다.  
-특히 수식 인식부터 계산, 자연어 풀이, 음성 안내까지 전 과정을 자동화함으로써,  
-시각적·청각적 학습을 동시에 지원하는 **차세대 학습 보조 도구**로 발전 가능성이 있습니다.  
 
 ---
 
