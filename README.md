@@ -96,7 +96,7 @@ project_root/
 ├── gemma3_answer.txt
 ├── output_sre_gtts.mp3
 └── output_sre_gtts.txt
-
+```
 ---
 
 ## 🔚 마무리 및 확장 가능성
