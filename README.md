@@ -67,7 +67,7 @@ Raspberry Pi를 중심으로 입력(USB Cam, MIC, Keyboard) → Mathpix API/OCR 
 - **server.py** : Ollama 기반 Gemma 모델과 연동하여 풀이 결과를 생성 및 반환  
 
 <p align="center">
-  <img src="https://github.com/shhhhhhh1799/Image/blob/main/Client.py.png" alt="핵심 기능 흐름" width="850"/>
+  <img src="https://github.com/shhhhhhh1799/Image/blob/main/client.py.png" alt="핵심 기능 흐름" width="850"/>
 </p>
 
 ---
